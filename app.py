@@ -405,9 +405,9 @@ def analyze():
         # -----------------------------------------
 
         if (
-            quality < 38
+            quality < 45
             or
-            skin_score < 5
+            skin_score < 15
         ):
 
             return jsonify({
@@ -416,8 +416,8 @@ def analyze():
                 "rejected",
 
                 "message":
-                "This image is not suitable for skin condition pre-screening.",
-
+                "Please upload a clear and suitable skin image.",
+                
                 "quality":
                 quality,
 
