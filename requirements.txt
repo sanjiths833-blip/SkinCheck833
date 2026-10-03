@@ -3,3 +3,4 @@ flask-cors
 Werkzeug
 opencv-python
 numpy
+gunicorn
