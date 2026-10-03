@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SkinSense AI | Skin Condition Pre-Screening</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="logo-area">
+            <div class="logo-icon">✚</div>
+
+            <div>
+                <h2>SkinSense AI</h2>
+                <span>SKIN CONDITION PRE-SCREENING</span>
+            </div>
+        </div>
+
+        <div class="system-status">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+
+        <!-- ================= HERO ================= -->
+
+        <section class="hero">
+
+            <div class="section-number">
+                [01] SELECTED CHALLENGE TRACK
+            </div>
+
+            <div class="sdg">
+                SDG 3 // GOOD HEALTH & WELL-BEING
+            </div>
+
+            <h1>
+                Skin Condition
+                <span>Pre-Screening via Photo</span>
+            </h1>
+
+            <p class="hero-description">
+                An ML-assisted tool where users upload a photo of a skin
+                concern and receive a preliminary risk flag for common
+                conditions.
+            </p>
+
+        </section>
+
+
+        <!-- ================= DISCLAIMER ================= -->
+
+        <section class="medical-warning">
+
+            <div class="warning-icon">⚠</div>
+
+            <div>
+                <h3>MEDICAL SAFETY NOTICE</h3>
+
+                <p>
+                    SkinSense AI provides a preliminary computer-assisted
+                    risk flag only. It is <strong>NOT a diagnosis</strong>
+                    and does not replace a qualified healthcare professional.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- ================= SCREENING GRID ================= -->
+
+        <section class="screening-grid">
+
+
+            <!-- ================= UPLOAD CARD ================= -->
+
+            <div class="card upload-card">
+
+                <div class="card-label">
+                    01 // IMAGE INPUT
+                </div>
+
+                <h2>Upload Skin Concern</h2>
+
+                <p class="card-description">
+                    Upload a clear close-up photo of the affected skin area.
+                </p>
+
+
+                <!-- DROP ZONE -->
+
+                <div class="upload-area" id="uploadArea">
+
+                    <input
+                        type="file"
+                        id="imageInput"
+                        accept=".jpg,.jpeg,.png,.webp"
+                        hidden
+                    >
+
+                    <div class="upload-icon">
+                        ↑
+                    </div>
+
+                    <h3>DROP IMAGE HERE</h3>
+
+                    <p>
+                        or
+                        <span id="browseText">click to browse</span>
+                    </p>
+
+                    <small>
+                        JPG / PNG / WEBP · MAX 8 MB
+                    </small>
+
+                </div>
+
+
+                <!-- IMAGE PREVIEW -->
+
+                <div
+                    class="preview-container"
+                    id="previewContainer"
+                >
+
+                    <img
+                        id="imagePreview"
+                        src=""
+                        alt="Selected skin image"
+                    >
+
+                    <button
+                        class="remove-btn"
+                        id="removeBtn"
+                    >
+                        REMOVE IMAGE
+                    </button>
+
+                </div>
+
+
+                <!-- ANALYZE BUTTON -->
+
+                <button
+                    class="analyze-btn"
+                    id="analyzeBtn"
+                    disabled
+                >
+                    RUN PRE-SCREENING
+                    <span>→</span>
+                </button>
+
+
+                <!-- LOADING -->
+
+                <div
+                    class="loading-box"
+                    id="loadingBox"
+                >
+
+                    <div class="loader"></div>
+
+                    <div>
+                        <strong>ANALYZING IMAGE...</strong>
+
+                        <p>
+                            Checking image quality → validating skin
+                            → running AI model
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= RESULT CARD ================= -->
+
+            <div class="card result-card">
+
+                <div class="card-label">
+                    02 // AI RISK OUTPUT
+                </div>
+
+                <h2>Screening Result</h2>
+
+
+                <!-- EMPTY STATE -->
+
+                <div
+                    class="empty-result"
+                    id="emptyResult"
+                >
+
+                    <div class="scan-circle">
+                        <span>+</span>
+                    </div>
+
+                    <h3>AWAITING IMAGE</h3>
+
+                    <p>
+                        Upload a suitable skin image to begin
+                        pre-screening.
+                    </p>
+
+                </div>
+
+
+                <!-- RESULT -->
+
+                <div
+                    class="result-content"
+                    id="resultContent"
+                >
+
+                    <div class="result-top">
+
+                        <div>
+                            <span>RISK LEVEL</span>
+
+                            <strong id="riskLevel">
+                                —
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>CONFIDENCE</span>
+
+                            <strong>
+                                <span id="confidence">
+                                    0
+                                </span>%
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <!-- RISK BAR -->
+
+                    <div class="risk-bar">
+
+                        <div
+                            id="riskProgress"
+                            class="risk-progress"
+                        ></div>
+
+                    </div>
+
+
+                    <!-- PREDICTION -->
+
+                    <div class="prediction-box">
+
+                        <span>
+                            PRELIMINARY FLAG
+                        </span>
+
+                        <h3 id="condition">
+                            —
+                        </h3>
+
+                        <p id="resultDisclaimer">
+                            —
+                        </p>
+
+                    </div>
+
+
+                    <!-- METRICS -->
+
+                    <div class="metrics">
+
+                        <div class="metric">
+
+                            <span>
+                                IMAGE QUALITY
+                            </span>
+
+                            <strong>
+                                <span id="imageQuality">
+                                    0
+                                </span>%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="metric">
+
+                            <span>
+                                SKIN SIGNAL
+                            </span>
+
+                            <strong>
+                                <span id="skinSignal">
+                                    0
+                                </span>%
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NEXT STEP -->
+
+                    <div class="next-step">
+
+                        <span>
+                            NEXT-STEP GUIDANCE
+                        </span>
+
+                        <p id="nextStep">
+                            —
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= REJECTED IMAGE ================= -->
+
+                <div
+                    class="rejected-content"
+                    id="rejectedContent"
+                >
+
+                    <div class="reject-icon">
+                        ×
+                    </div>
+
+                    <h3>
+                        IMAGE NOT SUITABLE
+                    </h3>
+
+                    <p id="rejectMessage">
+                        This image does not appear suitable
+                        for skin condition pre-screening.
+                    </p>
+
+                    <ul id="rejectReasons"></ul>
+
+                    <button
+                        id="retryBtn"
+                        class="retry-btn"
+                    >
+                        UPLOAD ANOTHER IMAGE
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= HISTORY ================= -->
+
+        <section class="card history-card">
+
+            <div class="history-header">
+
+                <div>
+
+                    <div class="card-label">
+                        03 // DATABASE
+                    </div>
+
+                    <h2>
+                        Past Scans
+                    </h2>
+
+                </div>
+
+                <button
+                    class="refresh-btn"
+                    id="refreshBtn"
+                >
+                    ↻ REFRESH
+                </button>
+
+            </div>
+
+
+            <div
+                class="history-list"
+                id="historyList"
+            >
+
+                <div class="no-history">
+                    No previous scans available.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TECHNOLOGY ================= -->
+
+        <section class="technology">
+
+            <div class="card-label">
+                04 // TECHNOLOGY
+            </div>
+
+            <div class="tech-grid">
+
+                <div class="tech-item">
+                    <strong>HTML5</strong>
+                    <span>Frontend</span>
+                </div>
+
+                <div class="tech-item">
+                    <strong>CSS3</strong>
+                    <span>Interface</span>
+                </div>
+
+                <div class="tech-item">
+                    <strong>JavaScript</strong>
+                    <span>Interaction</span>
+                </div>
+
+                <div class="tech-item">
+                    <strong>Python</strong>
+                    <span>Backend</span>
+                </div>
+
+                <div class="tech-item">
+                    <strong>TensorFlow</strong>
+                    <span>ML Model</span>
+                </div>
+
+                <div class="tech-item">
+                    <strong>SQLite</strong>
+                    <span>Database</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div>
+            SKINSENSE AI
+        </div>
+
+        <p>
+            Educational / Hackathon Prototype
+            · Not a medical diagnosis
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
