@@ -532,6 +532,10 @@ def history():
 # RUN SERVER
 # =====================================================
 
+@app.route("/api/history", methods=["GET"])
+def history():
+    return jsonify(get_history())
+    
 if __name__ == "__main__":
 
     print()
