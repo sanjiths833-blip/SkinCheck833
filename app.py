@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+from datetime import datetime
+from db import init_database, save_scan, get_history
+
 from werkzeug.utils import secure_filename
 
 from pathlib import Path
@@ -18,6 +21,8 @@ from predictor import predict_skin_condition
 app = Flask(__name__)
 
 CORS(app)
+
+init_database()
 
 
 # =====================================================
@@ -432,6 +437,19 @@ def analyze():
         prediction = predict_skin_condition(
             image_path
         )
+        # -----------------------------------------
+# SAVE SCAN TO DATABASE
+# -----------------------------------------
+
+save_scan(
+    created_at=datetime.now().isoformat(timespec="seconds"),
+    filename=filename,
+    quality=quality,
+    condition=prediction["condition"],
+    confidence=prediction["confidence"],
+    risk=prediction["risk"]
+)
+        
 
 
         # -----------------------------------------
@@ -497,6 +515,18 @@ def analyze():
 
             pass
 
+# =====================================================
+# HISTORY
+# =====================================================
+
+@app.route(
+    "/api/history",
+    methods=["GET"]
+)
+def history():
+    return jsonify(
+        get_history()
+    )
 
 # =====================================================
 # RUN SERVER
