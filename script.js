@@ -6,7 +6,7 @@
 
 /* ================= CONFIG ================= */
 
-const API_URL = "https://skincheck833-1.onrender.com";
+const API_URL = "https://skincheck833-1.onrender.com/api";
 
 /* ================= ELEMENTS ================= */
 
